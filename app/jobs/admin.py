@@ -25,11 +25,29 @@ class TitleInline(admin.TabularInline):
 class TaskInline(admin.TabularInline):
     model = Task
     show_change_link = True
+    fields = (
+        "order",
+        "name",
+        "amount",
+        "unit",
+        "price",
+        "total",
+    )
+    readonly_fields = ("total",)
 
 
 class LineItemInline(admin.TabularInline):
     model = LineItem
     show_change_link = True
+    fields = (
+        "order",
+        "name",
+        "amount",
+        "unit",
+        "price",
+        "total",
+    )
+    readonly_fields = ("total",)
 
 
 @admin.register(Job)

@@ -1,5 +1,5 @@
+from decimal import Decimal
 from django.db import models
-from djmoney.models.fields import MoneyField
 from projects.models import Project
 
 
@@ -64,10 +64,20 @@ class Task(models.Model):
     index = models.IntegerField("Index")
     name = models.CharField("Bezeichnung", max_length=255)
     description = models.TextField("Beschreibung")
+    amount = models.DecimalField(
+        "Menge", max_digits=17, decimal_places=3, blank=True, null=True
+    )
     unit = models.CharField("Einheit", max_length=10)
+    price = models.DecimalField(max_digits=17, decimal_places=2, blank=True, null=True)
 
     group = models.ForeignKey(Title, on_delete=models.PROTECT)
     job = models.ForeignKey(Job, on_delete=models.PROTECT, related_name="tasks")
+
+    @property
+    def total(self):
+        if self.price and self.amount:
+            return self.price * self.amount
+        return Decimal("0.00")
 
     class Meta:
         ordering = ["order"]
@@ -76,11 +86,19 @@ class Task(models.Model):
 class LineItem(models.Model):
     order = models.IntegerField("Reihenfolge")
     name = models.CharField("Bezeichnung", max_length=255)
-    unit = models.CharField("Einheit", max_length=10)
-    price = MoneyField(max_digits=17, decimal_places=2, default_currency="EUR")
+    amount = models.DecimalField(
+        "Menge", max_digits=17, decimal_places=3, blank=True, null=True
+    )
+    unit = models.CharField("Einheit", max_length=10, blank=True, null=True)
+    price = models.DecimalField(max_digits=17, decimal_places=2, blank=True, null=True)
 
     task = models.ForeignKey(Task, on_delete=models.PROTECT)
-    job = models.ForeignKey(Job, on_delete=models.PROTECT, related_name="lineitems")
+
+    @property
+    def total(self):
+        if self.price and self.amount:
+            return self.price * self.amount
+        return Decimal("0.00")
 
     class Meta:
         ordering = ["order"]

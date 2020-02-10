@@ -1,5 +1,4 @@
 Django
-django-money
 psycopg2-binary
 
 pylint
