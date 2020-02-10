@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: .devcontainer/postgres/Dockerfile
+  app:
+    build:
+      context: .
+      dockerfile: .devcontainer/app/Dockerfile
+    ports:
+      - "8000:8000"
+    links:
+      - postgres
+    command: "/app/.devcontainer/app/idle.sh"

@@ -1,0 +1,47 @@
+{
+    "dockerComposeFile": [
+        "../docker-compose.yml",
+        "docker-compose.extend.yml"
+    ],
+    "service": "app",
+    "workspaceFolder": "/app",
+    // Use 'settings' to set *default* container specific settings.json values on container create. 
+    // You can edit these settings after create using File > Preferences > Settings > Remote.
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "python.pythonPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.linting.pylintPath": "/usr/local/share/pip-global/bin/pylint",
+        "python.linting.pylintArgs": [
+            "app",
+            "--load-plugins",
+            "pylint_django",
+            "--disable=C0111,C0114,C0115,C0116"
+        ],
+        "python.testing.pytestEnabled": true,
+        "python.testing.unittestEnabled": false,
+        "python.testing.nosetestsEnabled": false,
+        "python.testing.pytestPath": "/usr/local/share/pip-global/bin/pytest",
+        "python.formatting.provider": "black",
+        "editor.formatOnSave": true,
+    },
+    "appPort": [
+        8000
+    ],
+    "shutdownAction": "stopCompose",
+    "postCreateCommand": "sudo cp -r /root/.ssh-localhost ~ && sudo chown -R $(id -u):$(id -g) ~/.ssh-localhost && mv ~/.ssh-localhost ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/* && pip install -r requirements.txt",
+    // Comment out next line to run as root
+    "remoteUser": "vscode",
+    "runArgs": [
+        "-u",
+        "vscode"
+    ],
+    "extensions": [
+        "ms-python.python",
+        "ms-azuretools.vscode-docke",
+        "jhartell.vscode-line-endings",
+        "hbenl.vscode-test-explorer",
+        "littlefoxteam.vscode-python-test-adapter"
+    ]
+}
