@@ -79,7 +79,7 @@ WSGI_APPLICATION = "core.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "mehrhandwerk_local",
+        "NAME": "systori_core_local",
         "USER": "postgres",
         "HOST": "postgres",
         "PORT": "5432",

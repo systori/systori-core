@@ -1,1 +1,1 @@
-CREATE DATABASE mehrhandwerk_local;
+CREATE DATABASE systori_core_local;

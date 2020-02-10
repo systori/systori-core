@@ -20,7 +20,7 @@ class Tasklevel0(models.Model):
     order = models.IntegerField("Reihenfolge")
     name = models.CharField("Bezeichnung", max_length=255)
     unit = models.CharField("Einheit", max_length=3)
-    price = MoneyField(max_digits=19, decimal_places=4, default_currency="EUR")
+    price = MoneyField(max_digits=17, decimal_places=2, default_currency="EUR")
 
     job = models.ForeignKey(Job, on_delete=models.PROTECT)
 
